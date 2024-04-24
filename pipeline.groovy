@@ -15,7 +15,7 @@ pipeline{
        VAR='NUEVO'
     }
     stages{
-        stage{
+        stage("create build name"){
             steps{
                   currentBuild.displayName= "service_back-"+ currentBuild.number
             }
