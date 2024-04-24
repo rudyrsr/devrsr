@@ -9,8 +9,8 @@ pipeline{
         jdk 'jdk21'
     }
     environment{
-        string defaultValue: 'dev', description: 'Colocar un brach a deployar', name: 'BRANCH', trim: false
-
+       // string defaultValue: 'dev', description: 'Colocar un brach a deployar', name: 'BRANCH', trim: false
+       VAR='NUEVO'
     }
     stages{
         stage("Limpiar"){
