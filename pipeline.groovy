@@ -16,8 +16,10 @@ pipeline{
     }
     stages{
         stage("create build name"){
-            steps{
-                  currentBuild.displayName= "service_back-"+ currentBuild.number
+            steps{           
+                script{
+                   currentBuild.displayName= "service_back-"+ currentBuild.number
+                }
             }
         }
         stage("Limpiar"){
