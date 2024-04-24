@@ -1,3 +1,4 @@
+def url_repo = "https://github.com/andresmerida/academic-management.git"
 pipeline{
    agent 
    {
@@ -8,7 +9,8 @@ pipeline{
         jdk 'jdk21'
     }
     environment{
-        workspace="/data/"
+        string defaultValue: 'dev', description: 'Colocar un brach a deployar', name: 'BRANCH', trim: false
+
     }
     stages{
         stage("Limpiar"){
@@ -18,7 +20,7 @@ pipeline{
         }
         stage("download proyect"){
             steps{
-                git credentialsId: 'git_credentials', branch: "dev", url: "https://github.com/andresmerida/academic-management.git"
+                git credentialsId: 'git_credentials', branch: "${BRANCH}", url: "${url_repo}"
                 echo "proyecto descargado"
             }
         }
