@@ -29,7 +29,6 @@ pipeline{
             steps{
                 git credentialsId: 'git_credentials', branch: "${BRANCH}", url: "${url_repo}"
                 echo "proyecto descargado"
-                echo env.
             }
         }
         stage('build proyect')
