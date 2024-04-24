@@ -8,8 +8,10 @@ pipeline{
         maven 'maven-396'
         jdk 'jdk21'
     }
+    parameters{
+         string defaultValue: 'dev', description: 'Colocar un brach a deployar', name: 'BRANCH', trim: false
+    }
     environment{
-       // string defaultValue: 'dev', description: 'Colocar un brach a deployar', name: 'BRANCH', trim: false
        VAR='NUEVO'
     }
     stages{
