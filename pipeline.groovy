@@ -15,6 +15,11 @@ pipeline{
        VAR='NUEVO'
     }
     stages{
+        stage{
+            steps{
+                  currentBuild.displayName= "service_back-"+ currentBuild.number
+            }
+        }
         stage("Limpiar"){
             steps{
                 cleanWs()
@@ -24,6 +29,7 @@ pipeline{
             steps{
                 git credentialsId: 'git_credentials', branch: "${BRANCH}", url: "${url_repo}"
                 echo "proyecto descargado"
+                echo env.
             }
         }
         stage('build proyect')
