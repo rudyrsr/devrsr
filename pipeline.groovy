@@ -10,6 +10,7 @@ pipeline{
     }
     parameters{
          string defaultValue: 'dev', description: 'Colocar un brach a deployar', name: 'BRANCH', trim: false
+         choice (name: 'SCAN_GRYPE', choices: ['NO','YES'], description: 'Activar escáner con grype')
     }
     environment{
        VAR='NUEVO'
@@ -45,6 +46,7 @@ pipeline{
         }
         stage("Test vulnerability")
         {
+           when (equals expected: 'YES', actual: SCAN_GRYPE) 
             steps{
                sh "/grype /tmp/app.jar > informe-scan.txt"
                archiveArtifacts artifacts: 'informe-scan.txt', onlyIfSuccessful: true
