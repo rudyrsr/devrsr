@@ -46,7 +46,7 @@ pipeline{
         }
         stage("Test vulnerability")
         {
-           when (equals expected: 'YES', actual: SCAN_GRYPE) 
+           when {equals expected: 'YES', actual: SCAN_GRYPE} 
             steps{
                sh "/grype /tmp/app.jar > informe-scan.txt"
                archiveArtifacts artifacts: 'informe-scan.txt', onlyIfSuccessful: true
