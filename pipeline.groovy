@@ -88,12 +88,13 @@ pipeline{
                     unstash 'backartifact'
                     sh "rm /data/publish/app.jar | true"
                     sh "cp am-core-web-service/target/app.jar /data/publish/"
-                    sh "docker rmi back-prueba:latest | true; cd /data/publish/ ; docker build -t back-prueba:latest ."
+                    sh "docker rmi back-prueba:latest | true; cd /data/publish/ ; docker build -t 192.168.137.10:8082/v2/repository/docker/back-prueba:latest ."
                     sh "pwd"
-                    id_imagen= sh(returnStdout: true, script: 'docker images | grep "back-prueba" | awk \'{print $3}\'')
-                    sh "echo $id_imagen"
+                    //id_imagen= sh(returnStdout: true, script: 'docker images | grep "back-prueba" | awk \'{print $3}\'')
+                    //sh "echo $id_imagen"
                     //sh (returnStdout: false, script: 'docker tag ${id_imagen} 192.168.137.10:8082/v2/repository/docker/back-prueba:latest')
-                     sh "docker tag $id_imagen 192.168.137.10:8082/v2/repository/docker/back-prueba:latest"
+                     //sh "docker tag $id_imagen 192.168.137.10:8082/v2/repository/docker/back-prueba:latest"
+                    sh "docker push 192.168.137.10:8082/v2/repository/docker/back-prueba:latest "
                 }
             }
         }
