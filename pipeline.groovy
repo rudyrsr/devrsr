@@ -1,9 +1,9 @@
 def url_repo = "https://github.com/andresmerida/academic-management.git"
 pipeline{
-   agent 
-   {
-    label any //'jenkins_slave'
-   }
+   agent any
+   //{
+    //label  //'jenkins_slave'
+   //}
     tools{
         maven 'maven-396'
         jdk 'jdk17'
