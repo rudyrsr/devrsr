@@ -2,11 +2,11 @@ def url_repo = "https://github.com/andresmerida/academic-management.git"
 pipeline{
    agent 
    {
-    label 'jenkins_slave'
+    label any //'jenkins_slave'
    }
     tools{
         maven 'maven-396'
-        jdk 'jdk21'
+        jdk 'jdk17'
     }
     parameters{
          string defaultValue: 'dev', description: 'Colocar un brach a deployar', name: 'BRANCH', trim: false
@@ -81,7 +81,7 @@ pipeline{
         }
         stage('Image push artifactory')
         {
-            agent {label 'principal'}
+            //agent {label 'principal'}
             steps{
                 script{
                     unstash 'backartifact'
