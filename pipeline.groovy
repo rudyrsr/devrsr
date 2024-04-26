@@ -53,6 +53,7 @@ pipeline{
             }
         }
         stage('sonarqube analysis'){
+              when {equals expected: 'YES', actual: SCAN_GRYPE}
             steps{
                script{
                    sh "pwd"
