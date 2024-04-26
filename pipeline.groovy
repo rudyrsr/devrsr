@@ -84,8 +84,8 @@ pipeline{
                 script{
                           
                     sh "hostname"
-                    sh echo "probando" > nuevo.txt
-                     
+                    echo "probando" > nuevo.txt
+
                 }
             }
         }
