@@ -93,7 +93,7 @@ pipeline{
                     id_imagen= sh(returnStdout: true, script: 'docker images | grep "back-prueba" | awk \'{print $3}\'')
                     sh "echo $id_imagen"
                     //sh (returnStdout: false, script: 'docker tag ${id_imagen} 192.168.137.10:8082/v2/repository/docker/back-prueba:latest')
-                     sh "docker tag $id_imagen 192.168.137.10:8082/v2/repository/docker/back-prueba:latest"'
+                     sh "docker tag $id_imagen 192.168.137.10:8082/v2/repository/docker/back-prueba:latest"
                 }
             }
         }
