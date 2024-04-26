@@ -88,8 +88,11 @@ pipeline{
                     sh "rm /data/publish/app.jar | true"
                     sh "cp am-core-web-service/target/app.jar /data/publish/"
                     sh "cd /data/publish/"
-                    sh "docker system prune -a -y"
+                    sh "docker rmi back-prueba:latest"
                     sh "docker build -t  back-prueba:latest  ."
+                    id_imagen=sh "docker images | grep \"back-prueba\" | awk '{print $3}'"
+                    sh "docker tag $id_imagen 192.168.137.10:8082/v2/repository/docker/back-prueba:latest"
+                    
                 }
             }
         }
