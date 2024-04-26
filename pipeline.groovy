@@ -85,7 +85,7 @@ pipeline{
             steps{
                 script{
                     unstash 'backartifact'
-                    sh "sshpass -s password scp /data/jenkins_home/workspace/APP-DEV/build_app-back/am-core-web-service/target/app.jar userver@192.168.137.3:/home/userver/"
+                    sh "sshpass -p password scp /data/jenkins_home/workspace/APP-DEV/build_app-back/am-core-web-service/target/app.jar userver@192.168.137.3:/home/userver/"
 
                 }
             }
