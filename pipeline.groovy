@@ -91,7 +91,7 @@ pipeline{
                     sh "docker rmi back-prueba:latest | true; cd /data/publish/ ; docker build -t back-prueba:latest ."
                     sh "pwd"
                     id_imagen= sh(returnStdout: true, script: 'docker images | grep "back-prueba" | awk \'{print $3}\'')
-                    sh "docker tag ${id_imagen} 192.168.137.10:8082/v2/repository/docker/back-prueba:latest"
+                    sh (returnStdout: false, script: 'docker tag ${id_imagen} 192.168.137.10:8082/v2/repository/docker/back-prueba:latest')
 
                 }
             }
