@@ -1,4 +1,5 @@
 def url_repo = "https://github.com/andresmerida/academic-management.git"
+def  id_imagen = ""
 pipeline{
    agent
    {
@@ -92,7 +93,7 @@ pipeline{
                     sh "docker build -t  back-prueba:latest  ."
                     id_imagen=sh "docker images | grep \"back-prueba\" | awk '{print $3}'"
                     sh "docker tag $id_imagen 192.168.137.10:8082/v2/repository/docker/back-prueba:latest"
-                    
+
                 }
             }
         }
