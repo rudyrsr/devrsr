@@ -6,7 +6,7 @@ pipeline{
    }
     tools{
         maven 'maven-396'
-        jdk 'jdk17'
+        jdk 'jdk21'
     }
     parameters{
          string defaultValue: 'dev', description: 'Colocar un brach a deployar', name: 'BRANCH', trim: false
