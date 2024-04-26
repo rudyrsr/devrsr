@@ -85,8 +85,11 @@ pipeline{
             steps{
                 script{
                     unstash 'backartifact'
-                    echo "hola"
-
+                    sh "rm /data/publish/app.jar | true"
+                    sh "cp am-core-web-service/target/app.jar /data/publish/"
+                    sh "cd /data/publish/"
+                    sh "docker system prune -a -y"
+                    sh "docker build -t  back-prueba:latest  ."
                 }
             }
         }
