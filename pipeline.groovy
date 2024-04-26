@@ -1,6 +1,6 @@
 def url_repo = "https://github.com/andresmerida/academic-management.git"
 pipeline{
-   agent any
+   agent
    {
       label 'jenkins_slave'
    }
