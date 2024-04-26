@@ -81,7 +81,7 @@ pipeline{
         }
         stage('Image push artifactory')
         {
-            agent any
+            agent {label 'master'}
             steps{
                 script{
                     unstash 'backartifact'
