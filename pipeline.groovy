@@ -1,7 +1,5 @@
 pipeline{
-    agent{
-        label 'nod2_slave'
-    }    
+    agent any   
     stages{
         stage("Limpiar"){
             steps{
