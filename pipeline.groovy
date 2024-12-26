@@ -3,7 +3,7 @@ pipeline{
         label 'nod2_slave'
     }
     tools{
-        maven 'maven-362'
+        maven 'maven-38'
         jdk 'jdk21'
     }  
     stages{
