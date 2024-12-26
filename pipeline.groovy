@@ -5,7 +5,10 @@ pipeline{
     tools{
         maven 'maven-38'
         jdk 'jdk21'
-    }  
+    }
+    environment{
+       workspace= "/data/"
+    }
     stages{
         stage("Limpiar"){
             steps{
