@@ -1,5 +1,7 @@
 pipeline{
-    agent any 
+    agent{
+        label 'nod2_slave'
+    }
     tools{
         maven 'maven-362'
         jdk 'jdk21'
