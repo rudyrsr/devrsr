@@ -20,7 +20,7 @@ pipeline{
         stage('descargando proyecto')
         {
             steps{
-                git credentialsId: 'Jenkins', branch: "dev", url: "https://github.com/andresmerida/academic-management.git" 
+                git credentialsId: 'git_jenkins', branch: "devrsr", url: "https://github.com/andresmerida/academic-management.git" 
                 sh "mvn -v"
                 sh "pwd"
                 sh "mvn clean compile package"
