@@ -2,17 +2,27 @@ pipeline{
     agent{
         label 'nod2_slave'
     }
+    tools{
+        maven 'maven-39'
+        jdk 'openjdk-17'
+    }
     stages{
         stage("Limpiar"){
             steps{
                  cleanWs()
             }
         }
-        stage("Ejecutar prueba"){
+        stage("Descargar Proyecto"){
             steps{
-                echo "empezando con la creacion de jobs"
-                sleep time: 1, unit: 'MINUTES'
+                git credentialsId: 'git_jenkins', branch: "dev", url: "https://github.com/andresmerida/academic-management.git"
             }
+        }
+        stage("Realizar Build"){
+             steps{
+                sh 'mvn -v'
+                sh 'pwd'
+                sh "mvn clean compile package"
+             }
         }
     }
 }
