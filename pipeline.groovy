@@ -28,5 +28,10 @@ pipeline{
                 sh "cp am-core-web-service/target/app.jar /tmp/"
              }
         }
+        stage("Test de vulnerabilidades de seguridad")
+           steps{
+               sh "/grype /tmp/app.jar > informe-scan.txt"
+               rchiveArtifacts artifacts: 'informe-scan.txt', onlyIfSuccessful: true
+           }
     }
 }
