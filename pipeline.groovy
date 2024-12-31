@@ -25,7 +25,7 @@ pipeline{
                 sh "mv am-core-web-service/target/*.jar am-core-web-service/target/app.jar"
                 stash includes: 'am-core-web-service/target/app.jar', name: 'backartifact'
                 archiveArtifacts artifacts: 'am-core-web-service/target/app.jar', onlyIfSuccessful: true
-                sh "cp mv am-core-web-service/target/app.jar /tmp/"
+                sh "cp am-core-web-service/target/app.jar /tmp/"
              }
         }
     }
