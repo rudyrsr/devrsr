@@ -34,5 +34,28 @@ pipeline{
                archiveArtifacts artifacts: 'informe-scan.txt', onlyIfSuccessful: true
            }
         }
+        stage("Test de analisis de codigo estatico")
+        {
+            steps{
+                script{
+                     sh "pwd"
+                     writeFile encoding: 'UTF-8', file:'sonar-project.properties', text: """ sonar.projectKey=academy
+                     sonar.projectName=academy
+                     sonar.projectVersion=academy
+                     sonar.sourceEnconding=UTF-8
+                     sonar.sources=am-core-web-service/src/main/
+                     sonar.java.binaries=am-core-web-service/target/
+                     sonar.java.libraries=am-core-web-service/target/classes/
+                     sonar.language=java
+                     sonar.scm.provider=git
+                     """
+                     withSonarQubeEnv('Sonar_CI')
+                     {
+                        def scannerHome= tool 'Sonar_CI'
+                        sh "${tool("Sonar_CI")}/bin/sonar-scanner -X"
+                     }
+                }
+            }
+        }
     }
 }
