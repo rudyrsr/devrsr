@@ -11,6 +11,13 @@ pipeline{
            choice (name:'SCAN_CODE', choices:['NO','YES'], description: 'Control de escaneo de codigo estatico')
     }
     stages{
+        stage("Creando nombre del build"){
+            steps{
+                script{
+                    currentBuild.displayName= "Deploy_servicio_back-"+ currentBuild.number
+                }
+            }
+        }
         stage("Limpiar"){
             steps{
                  cleanWs()
