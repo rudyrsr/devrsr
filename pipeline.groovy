@@ -6,6 +6,10 @@ pipeline{
         maven 'maven-39'
         jdk 'openjdk-17'
     }
+    parameters{
+           choice (name:'SCAN_SECURITY', choices:['YES','NO'], description: 'Control de escaneo de seguridad')
+           choice (name:'SCAN_CODE', choices:['NO','YES'], description: 'Control de escaneo de codigo estatico')
+    }
     stages{
         stage("Limpiar"){
             steps{
@@ -28,12 +32,13 @@ pipeline{
                 sh "cp am-core-web-service/target/app.jar /tmp/"
              }
         }
-       /* stage("Test de vulnerabilidades de seguridad"){
+        stage("Test de vulnerabilidades de seguridad"){
+         when { equals expected: 'YES', actual: params.SCAN_SECURITY}
            steps{
                sh "/grype /tmp/app.jar > informe-scan.txt"
                archiveArtifacts artifacts: 'informe-scan.txt', onlyIfSuccessful: true
            }
-        }*/
+        }
         stage("Test de analisis de codigo estatico")
         {
             steps{
