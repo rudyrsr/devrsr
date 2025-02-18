@@ -20,7 +20,7 @@ pipeline{
         }
         stage("Descargar Proyecto"){
             steps{
-                git credentialsId: 'git_cred',branch: "dev", url:"${url_repo}"
+                git credentialsId: 'git_cred',branch: "${params.BRANCH}", url:"${url_repo}"
             }
         }
         stage("Realizar Build"){
@@ -35,9 +35,13 @@ pipeline{
            }
         }
         stage("Test seguridad grype"){
+            when { equals expected: 'YES', actual: SCAN_GRYPE}
             steps{
-                sh "/grype /tmp/app.jar > Informe-scan.txt"
-                archiveArtifacts artifacts: 'Informe-scan.txt', onlyIfSuccessful:true
+                script{
+                  sh "/grype /tmp/app.jar > Informe-scan.txt"
+                  archiveArtifacts artifacts: 'Informe-scan.txt', onlyIfSuccessful:true
+                
+                }
             }
         }
     }
