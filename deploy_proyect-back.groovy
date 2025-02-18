@@ -9,7 +9,7 @@ pipeline{
     }
     parameters{
         string defaultValue: 'dev', description: 'Colocar un branch a deployar', name:'BRANCH',trim:false
-        choice(name: 'SCAN_GRYPE',  choinces: ['YES','NO']), description: 'Activar si desea escanear con grype'
+        choice(name: 'SCAN_GRYPE',  choinces: ['YES','NO'], description: 'Activar si desea escanear con grype')
 
     }
     stages{
