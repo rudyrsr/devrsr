@@ -13,6 +13,15 @@ pipeline{
 
     }
     stages{
+        stage("Colocar nombre de build")
+        {
+            steps{
+                script
+                {
+                    currentBuild.displayName= "service_back-"+ currentBuild.number
+                }
+            }
+        }
         stage("Limpiar"){
            steps{
                 cleanWs()
