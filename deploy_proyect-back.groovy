@@ -30,7 +30,7 @@ pipeline{
         }
         stage("Test seguridad grype"){
             steps{
-                sh "/grype /tmp/app.jar > Informe.txt"
+                sh "/grype /tmp/app.jar > Informe-scan.txt"
                 archiveArtifacts artifacts: 'Informe-scan.txt', onlyIfSuccessful:true
             }
         }
