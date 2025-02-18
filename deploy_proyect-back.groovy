@@ -1,3 +1,4 @@
+def url_repo = "https://github.com/andresmerida/academic-management.git"
 pipeline{
     agent{
         label 'nod2_slave'
@@ -5,6 +6,11 @@ pipeline{
     tools{
         maven 'maven-39'
         jdk 'openjdk-17slave'
+    }
+    parameters{
+        string defaultValue: 'dev', description: 'Colocar un branch a deployar', name:'BRANCH',trim:false
+        choice(name: 'SCAN_GRYPE',  choinces: ['YES','NO']), description: 'Activar si desea escanear con grype'
+
     }
     stages{
         stage("Limpiar"){
@@ -14,7 +20,7 @@ pipeline{
         }
         stage("Descargar Proyecto"){
             steps{
-                git credentialsId: 'git_cred',branch: "dev", url:"https://github.com/andresmerida/academic-management.git"
+                git credentialsId: 'git_cred',branch: "dev", url:"${url_repo}"
             }
         }
         stage("Realizar Build"){
