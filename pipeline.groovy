@@ -17,8 +17,8 @@ pipeline{
 
     }
 	environment{
-       EMAIL_RECIPIENTS= 'rudy3112rsr@gmail.com,rudy3112rsr@gmail.com'
-       EMAIL_RECIPIENTS_SUPPORT= 'rudy3112rsr@gmail.com,rudy3112rsr@gmail.com'
+       EMAIL_RECIPIENTS= 'rudy3112rsr@gmail.com,rudy3112cursos@gmail.com'
+       EMAIL_RECIPIENTS_SUPPORT= 'rudy3112rsr@gmail.com,rudy3112cursos@gmail.com'
     }
     stages{
         stage("Colocar nombre de build")
