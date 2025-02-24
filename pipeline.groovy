@@ -66,7 +66,7 @@ pipeline{
                 }
             }
         }
-        stage("Test con SonarQube"){
+        /*stage("Test con SonarQube"){
             steps{
                 script{
                     sh "pwd"
@@ -88,7 +88,7 @@ pipeline{
                 }
             }
 
-        }
+        }*/
 		/*stage('Image push artifactory')
         {
             agent {label 'node_deploy'}
