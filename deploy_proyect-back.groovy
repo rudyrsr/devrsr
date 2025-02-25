@@ -10,7 +10,7 @@ pipeline{
     parameters{
         string defaultValue: 'dev', description: 'Colocar un branch a deployar', name:'BRANCH', trim: false
         choice (name: 'SCAN_GRYPE',  choices: ['YES','NO'], description: 'Activar si desea escanear con grype')
-
+        choice (name: 'SCAN_SONNAR',  choices: ['YES','NO'], description: 'Activar si desea escanear con SonnarQube')
     }
     stages{
         stage("Colocar nombre de build")
@@ -54,6 +54,7 @@ pipeline{
             }
         }
         stage("Test con SonarQube"){
+            when { equals expected: 'YES', actual: SCAN_SONNAR}
             steps{
                 script{
                     sh "pwd"
@@ -67,7 +68,6 @@ pipeline{
 						sonar.language=java
 						sonar.scm.provider=git
 						"""
-                        // Sonar Disabled due to we don't have a sonar in tools account yet
 						withSonarQubeEnv('Sonar_CI') {
 						     def scannerHome = tool 'Sonar_CI'
 						     sh "${tool("Sonar_CI")}/bin/sonar-scanner -X"
