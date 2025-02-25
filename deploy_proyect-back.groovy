@@ -76,5 +76,18 @@ pipeline{
             }
 
         }
+        stage("Push de imagen a Nexus"){
+            agent { label 'node_deploy'}
+            steps{
+                script{
+                    unstash 'backartifact'
+                    sh "rm /data/install_node/publish/app.jar | true"
+                    sh "cp am-core-web-service/target/app.jar /data/install_node/publish/"
+                    sh "docker rmi 192.168.137.10:8082/v2/repository/docker-release/app-back:latest | true; cd /data/install_node/publish/; docker build -t 192.168.137.10:8082/v2/repository/docker-release/app-back:latest ."
+                    sh "docker push 192.168.137.10:8082/v2/repository/docker-release/app-back:latest"      
+                }
+            }
+
+        }
     }
 }
