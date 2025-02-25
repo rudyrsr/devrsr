@@ -105,7 +105,6 @@ pipeline{
     }
     post {
         success {
-		    stash includes: 'Informe-scan.txt', name: ''
 			unstash  'back_reports'
 		    sendEmail("Successful","${env.EMAIL_RECIPIENTS}","${low_vp}","${medium_vp}","${high_vp}","${critical_vp}")
 	    }
