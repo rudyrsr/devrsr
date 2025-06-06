@@ -51,7 +51,7 @@ pipeline{
             agent { label 'grype_test'}
             steps{
                 unstash 'backartifact'
-                sh "/grype am-core-web-service/target/app.jar > Informe-scan.txt"
+                sh "/grype /home/workspace/APP-DEV/job_test2/am-core-web-service/target/app.jar > Informe-scan.txt"
                  archiveArtifacts artifacts: 'Informe-scan.txt', onlyIfSuccessful: true
             }
 
