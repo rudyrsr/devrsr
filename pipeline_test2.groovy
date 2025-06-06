@@ -48,6 +48,7 @@ pipeline{
             }
         }
         stage("Test de vulnerabilidades de seguridad"){
+            agent { label 'grype_test'}
             steps{
                 unstash 'backartifact'
                 sh "/grype am-core-web-service/target/app.jar > Informe-scan.txt"
