@@ -3,7 +3,7 @@ pipeline{
        label 'slave1'
     }
     tools{
-        jdk 'jdk_2107'
+        jdk 'jdk_17'
         maven 'Maven-399'
     }
     stages{
