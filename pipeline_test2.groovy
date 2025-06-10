@@ -54,7 +54,7 @@ pipeline{
             }
         }
         stage("Test de vulnerabilidades de seguridad"){
-            when(equals expected: 'YES', actual: SCAN_GRYPE)
+            when {equals expected: 'YES', actual: SCAN_GRYPE}
             agent { label 'grype_test'}
             steps{
                script{
@@ -71,7 +71,7 @@ pipeline{
 
         }
         stage("Test con SonarQube"){
-            when(equals expected: 'YES', actual:SCAN_SONARQ)
+            when {equals expected: 'YES', actual:SCAN_SONARQ}
             steps{
                 script{
                     sh "pwd"
