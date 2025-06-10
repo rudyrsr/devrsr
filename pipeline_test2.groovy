@@ -13,6 +13,8 @@ pipeline{
     }
     parameters{
         string defaultValue: 'dev', description: 'Colocar el branch a ejecutar', name: 'BRANCH', trim: false
+        choice(name: 'SCAN_GRYPE', choices: ['NO', 'YES'], description: 'Activar si desea escanear con grype')
+        choice(name: 'SCAN_SONARQ', choices: ['NO', 'YES'], description: 'Activar si desea escanear con Sonar Qube')
     }
     stages{
         stage("Limpiar Workspace"){
@@ -52,6 +54,7 @@ pipeline{
             }
         }
         stage("Test de vulnerabilidades de seguridad"){
+            when(equals expected: 'YES', actual: SCAN_GRYPE)
             agent { label 'grype_test'}
             steps{
                script{
@@ -68,6 +71,7 @@ pipeline{
 
         }
         stage("Test con SonarQube"){
+            when(equals expected: 'YES', actual:SCAN_SONARQ)
             steps{
                 script{
                     sh "pwd"
