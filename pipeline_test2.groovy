@@ -67,5 +67,29 @@ pipeline{
             }
 
         }
+        stage("Test con SonarQube"){
+            steps{
+                script{
+                    sh "pwd"
+                    writeFile encoding: 'UTF-8', file: 'sonar-project.properties', text: """sonar.projectKey=academy
+						sonar.projectName=academy
+						sonar.projectVersion=academy
+						sonar.sourceEncoding=UTF-8
+						sonar.sources=am-core-web-service/src/main/
+						sonar.java.binaries=am-core-web-service/target/
+						sonar.java.libraries=am-core-web-service/target/classes
+						sonar.language=java
+						sonar.scm.provider=git
+						"""
+                        // Sonar Disabled due to we don't have a sonar in tools account yet
+						withSonarQubeEnv('Sonar_CI') {
+						     def scannerHome = tool 'Sonar_CI'
+						     sh "${tool("Sonar_CI")}/bin/sonar-scanner -X"
+						}   
+                }
+            }
+
+        }
+
     }
 }
