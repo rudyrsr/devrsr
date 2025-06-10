@@ -1,4 +1,8 @@
 def url_repo = "https://github.com/andresmerida/academic-management.git"
+def low_vp = ""
+def high_vp = ""
+def medium_vp = ""
+def critical_vp = ""
 pipeline{
     agent {
        label 'slave1'
@@ -50,9 +54,16 @@ pipeline{
         stage("Test de vulnerabilidades de seguridad"){
             agent { label 'grype_test'}
             steps{
-                unstash 'backartifact'
-                sh "/grype /home/workspace/APP-DEV/job_test2/am-core-web-service/target/app.jar > Informe-scan.txt"
+               script{
+                 unstash 'backartifact'
+                 sh "/grype /home/workspace/APP-DEV/job_test2/am-core-web-service/target/app.jar > Informe-scan.txt"
                  archiveArtifacts artifacts: 'Informe-scan.txt', onlyIfSuccessful: true
+                 low_vp = sh(returnStdout: true, script: "cat Informe-scan.txt | grep 'Low' | wc -l").trim()
+                 medium_vp = sh(returnStdout: true, script: "cat Informe-scan.txt | grep 'Medium' | wc -l").trim()
+                 high_vp = sh(returnStdout: true, script: "cat Informe-scan.txt | grep 'High' | wc -l").trim()
+                 critical_vp = sh(returnStdout: true, script: "cat Informe-scan.txt | grep 'Critical' | wc -l").trim()
+                 sh "echo 'vulnerabilidades: low_vp->${low_vp}, medium_vp->${medium_vp}, high_vp->${high_vp}, critical_vp->${critical_vp}'"
+               }
             }
 
         }
