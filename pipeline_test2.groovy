@@ -94,6 +94,20 @@ pipeline{
             }
 
         }
+        stage('Image push images')
+        {
+            agent {label 'node_deploy'}
+            steps{
+                script{
+                    unstash 'backartifact'
+                    sh "rm /data/publish/app.jar | true"
+                    sh "cp am-core-web-service/target/app.jar /data/publish/"
+                    sh "docker rmi  192.168.137.10:8082/docker-test/back-prueba:latest | true; cd /data/publish/ ; docker build -t 192.168.137.10:8082/docker-test/back-prueba:latest ."
+                    sh "docker push  192.168.137.10:8082/docker-test/back-prueba:latest "
+                }
+            }
+        }
+
 
     }
 }
