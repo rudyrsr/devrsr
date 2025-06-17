@@ -177,11 +177,11 @@ def sendEmail(status, EMAIL_RECIPIENTS,low_vp,medium_vp,high_vp,critical_vp) {
 </html>'''
  if(status=="Successful"){
      
-        emailext body:  body1 + "<br><a>REGARDS</a><br><a>JENKINS</a><br><br>", mimeType: 'text/html',attachmentsPattern:'*.txt', subject: 'Actualizando el BACK-END', to: EMAIL_RECIPIENTS
+        email body:  body1 + "<br><a>REGARDS</a><br><a>JENKINS</a><br><br>", mimeType: 'text/html',attachmentsPattern:'*.txt', subject: 'Actualizando el BACK-END', to: EMAIL_RECIPIENTS
      
         
     }
     else{
-        emailext body: body2 + "<br><a>REGARDS</a><br><a>JENKINS</a><br><br>", mimeType: 'text/html', attachLog: true, subject: 'Actualizando el BACK-END', to: EMAIL_RECIPIENTS_SUPPORT
+        email body: body2 + "<br><a>REGARDS</a><br><a>JENKINS</a><br><br>", mimeType: 'text/html', attachLog: true, subject: 'Actualizando el BACK-END', to: EMAIL_RECIPIENTS_SUPPORT
     }
 }
