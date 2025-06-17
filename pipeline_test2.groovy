@@ -152,7 +152,7 @@ def sendEmail(status, EMAIL_RECIPIENTS,low_vp,medium_vp,high_vp,critical_vp) {
    <th>MEDIO</th>
    <th>BAJO</th>
    <tr>
-     <td>BACK-END</td>
+     <td>BACK-END </td>
      <td style="color:red;">'''+critical_vp+'''</td>
      <td style="color:OrangeRed;">'''+high_vp+'''</td>
      <td style="color:GoldenRod;">'''+medium_vp+'''</td>
