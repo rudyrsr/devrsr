@@ -28,5 +28,21 @@ pipeline{
                 sh "mvn clean compile package"
             }
         }
+        stage("archivar artefacto")
+        {
+            steps{
+                sh "mv am-core-web-service/target/am-core-web-service-1.0.0.jar am-core-web-service/target/app.jar"
+                stash includes: 'am-core-web-service/target/app.jar', name: 'backartifact'
+                archiveArtifacts artifacts: 'am-core-web-service/target/app.jar', onlyIfSuccessful: true
+            }
+        }
+        stage("Test de vulnerabilidades de seguridad"){
+            agent { label 'grype_test'}
+            steps{
+                unstash 'backartifact'
+                sh "/grype /home/workspace/DEV/APP-DEV/job_test4/am-core-web-service/target/app.jar > Informe-scan.txt"
+                 archiveArtifacts artifacts: 'Informe-scan.txt', onlyIfSuccessful: true
+            }
+        }
     }
 }
