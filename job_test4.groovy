@@ -4,8 +4,8 @@ pipeline{
       label 'slave1'        
     }
     tools{
-        jdk 'Java21_master'
-        maven 'Maven-3911'
+        jdk 'Java17_slave1'
+        maven 'Maven-399'
     }
     stages{
         stage("Limpiar Workspace")
