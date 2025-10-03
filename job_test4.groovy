@@ -47,7 +47,7 @@ pipeline{
             }
         }
         stage("Test de vulnerabilidades de seguridad"){
-            when (equals expected: 'YES', actual: SCAN_GRYPE)
+            when {equals expected: 'YES', actual: SCAN_GRYPE}
             agent { label 'grype_test'}
             steps{
                 script {
