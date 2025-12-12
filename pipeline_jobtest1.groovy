@@ -35,5 +35,13 @@ pipeline{
                 archiveArtifacts artifacts: 'am-core-web-service/target/app.jar', onlyIfSuccessful: true
             }
         }
+        stage("Test de vulnerabilidades de seguridad"){
+            agent { label 'grype_test'}
+            steps{
+                  unstash 'backartifact'
+                  sh "/grype /home/workspace/DEV/APP-DEV/job_test4/am-core-web-service/target/app.jar > Informe-scan.txt"
+                  archiveArtifacts artifacts: 'Informe-scan.txt', onlyIfSuccessful: true
+            }
+        }
     }
 }
