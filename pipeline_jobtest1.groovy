@@ -1,3 +1,4 @@
+def url_repo= "https://github.com/andresmerida/academic-management.git"
 pipeline{
     agent{
         label 'slave1'
@@ -21,7 +22,7 @@ pipeline{
         stage("Descargar Proyecto")
         {
             steps{
-                git credentialsId: 'Cred_git',branch: "dev",url:"https://github.com/andresmerida/academic-management.git"
+                git credentialsId: 'Cred_git',branch: "${params.BRANCH}",url:"${url_repo}"
             }
         }
         stage("Realizar build")
@@ -41,6 +42,7 @@ pipeline{
             }
         }
         stage("Test de vulnerabilidades de seguridad"){
+            when {equals expected: 'YES', actual: SCAN_GRYPE}
             agent { label 'grype_test'}
             steps{
                   unstash 'backartifact'
@@ -50,6 +52,7 @@ pipeline{
         }
         stage("Test con SonarQube")
         {
+            when {equals expected: 'YES', actual: SCAN_SONARQ_}
             agent{label 'slave1'}
             steps{
                 script{
