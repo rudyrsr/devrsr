@@ -65,7 +65,7 @@ pipeline{
                   medium_vp = sh (returnStdout: true, script: "cat Informe-scan.txt | grep 'Medium' | wc -l").trim()
                   high_vp = sh (returnStdout: true, script: "cat Informe-scan.txt | grep 'High' | wc -l").trim()
                   critical_vp = sh (returnStdout: true, script: "cat Informe-scan.txt | grep 'Critical' | wc -l").trim()
-                  sh "echo 'vulverabilidades: low_vp->${low_vpw}, medium_vp->${medium_vp}, high_vp->${high_vp}, critical_vp->${critical_vp}'"
+                  sh "echo 'vulverabilidades: low_vp->${low_vp}, medium_vp->${medium_vp}, high_vp->${high_vp}, critical_vp->${critical_vp}'"
                 }
             }
         }
