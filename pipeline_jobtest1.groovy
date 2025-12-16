@@ -52,7 +52,7 @@ pipeline{
         }
         stage("Test con SonarQube")
         {
-            when {equals expected: 'YES', actual: SCAN_SONARQ_}
+            when {equals expected: 'YES', actual: SCAN_SONARQ}
             agent{label 'slave1'}
             steps{
                 script{
