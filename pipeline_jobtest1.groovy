@@ -50,13 +50,11 @@ pipeline{
                   archiveArtifacts artifacts: 'Informe-scan.txt', onlyIfSuccessful: true
             }
         }
-        stage("Test con SonarQube")
-        {
+    stage("Test con SonarQube"){
             when {equals expected: 'YES', actual: SCAN_SONARQ}
-            agent{label 'slave1'}
             steps{
                 script{
-                       sh "pwd"
+                    sh "pwd"
                     writeFile encoding: 'UTF-8', file: 'sonar-project.properties', text: """sonar.projectKey=academy
 						sonar.projectName=academy
 						sonar.projectVersion=academy
@@ -69,12 +67,12 @@ pipeline{
 						"""
                         // Sonar Disabled due to we don't have a sonar in tools account yet
 						withSonarQubeEnv('Sonar_CI') {
-						    def scannerHome = tool 'Sonar_CI'
-						    sh "${tool("Sonar_CI")}/bin/sonar-scanner -X"
+						     def scannerHome = tool 'Sonar_CI'
+						     sh "${tool("Sonar_CI")}/bin/sonar-scanner -X"
 						}   
-
                 }
             }
+
         }
     }
 }
