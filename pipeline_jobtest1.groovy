@@ -1,4 +1,8 @@
-def url_repo= "https://github.com/andresmerida/academic-management.git"
+def url_repo = "https://github.com/andresmerida/academic-management.git"
+def low_vp = ""
+def medium_vp = ""
+def high_vp = ""
+def critical_vp = ""
 pipeline{
     agent{
         label 'slave1'
@@ -45,9 +49,16 @@ pipeline{
             when {equals expected: 'YES', actual: SCAN_GRYPE}
             agent { label 'grype_test'}
             steps{
+                script{
                   unstash 'backartifact'
                   sh "/grype /home/workspace/DEV/APP-DEV/job_test4/am-core-web-service/target/app.jar > Informe-scan.txt"
                   archiveArtifacts artifacts: 'Informe-scan.txt', onlyIfSuccessful: true
+                  low_vp = sh (returnStdout: true, script: "cat Informe-scan.txt | grep 'Low' | wc -l").trim()
+                  medium_vp = sh (returnStdout: true, script: "cat Informe-scan.txt | grep 'Medium' | wc -l").trim()
+                  high_vp = sh (returnStdout: true, script: "cat Informe-scan.txt | grep 'High' | wc -l").trim()
+                  critical_vp = sh (returnStdout: true, script: "cat Informe-scan.txt | grep 'Critical' | wc -l").trim()
+                  sh "echo 'vulverabilidades: low_vp->${low_vpw}, medium_vp->${medium_vp}, high_vp->${high_vp}, critical_vp->${critical_vp}'"
+                }
             }
         }
     stage("Test con SonarQube"){
