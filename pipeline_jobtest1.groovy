@@ -6,6 +6,11 @@ pipeline{
         jdk 'javas-17'
         maven 'Maven-399'
     }
+    parameters{
+        string defaultValue:'dev', description: 'Colocar el branch a ejecutar', name: 'BRANCH', trim: false
+        choice (name: 'SCAN_GRYPE', choices: ['NO','YES'], description: 'Seleccionar YES si desea escanear la vulnerabilidades de seguridad')
+        choice (name: 'SCAN_SONARQ', choices: ['NO','YES'], description: 'Seleccionar YES si desea escanear el codigo con SonarQube')
+    }
     stages{
         stage("Limpiar Workspace")
         {
@@ -45,6 +50,7 @@ pipeline{
         }
         stage("Test con SonarQube")
         {
+            agent{label 'slave1'}
             steps{
                 script{
                        sh "pwd"
@@ -60,8 +66,8 @@ pipeline{
 						"""
                         // Sonar Disabled due to we don't have a sonar in tools account yet
 						withSonarQubeEnv('Sonar_CI') {
-						     def scannerHome = tool 'Sonar_CI'
-						     sh "${tool("Sonar_CI")}/bin/sonar-scanner -X"
+						    def scannerHome = tool 'Sonar_CI'
+						    sh "${tool("Sonar_CI")}/bin/sonar-scanner -X"
 						}   
 
                 }
