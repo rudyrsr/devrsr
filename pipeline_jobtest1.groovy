@@ -23,6 +23,14 @@ pipeline{
                 cleanWs()
             }
         }
+        stage("Colocar nombre de Build")
+        {
+            steps{
+                script{
+                    currentBuild.displayName= "services_back-"+ currentBuild.number
+                }
+            }
+        }
         stage("Descargar Proyecto")
         {
             steps{
