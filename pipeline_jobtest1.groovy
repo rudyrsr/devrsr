@@ -93,7 +93,7 @@ pipeline{
             }
 
         }
-        stage('Image push images')
+        stage('push images in nexus')
         {
             agent {label 'node_deploy'}
             steps{
