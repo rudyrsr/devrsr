@@ -1,7 +1,7 @@
 pipeline{
-    agent {
-        label 'slave1'
-    }
+    agent any  
+       //abel 'slave1'
+    //
     tools{
         jdk 'java21_slave1'
         maven 'maven-399'
