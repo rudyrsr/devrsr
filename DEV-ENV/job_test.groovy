@@ -7,13 +7,16 @@ pipeline{
         jdk 'java21_slave1'
         maven 'maven-399'
     }
+    parameters{
+        string defaultValue:'dev',description: 'Colocar el branch a ejecutar', name: 'BRANCH', trim: false
+        choice(name: 'SCAN_GRYPE', choices: ['YES','NO'], description:'Seleccione YES si desea escanear las vulnerabilidades de seguridad')
+    }
     stages{
         stage("Limpiar Workspace"){
             steps{
                 cleanWs()
             }
         }
-        stage("Colocar nombre de Build")
         {
             steps{
                 script{
@@ -23,7 +26,7 @@ pipeline{
         }
         stage("Descargar Proyecto"){
             steps{
-                git credentialsId: 'git_cred', branch: 'dev', url: "${url_repo}"
+                git credentialsId: 'git_cred', branch: "${params.BRANCH}", url: "${url_repo}"
             }
         }
         stage("Realizar Build"){
@@ -42,6 +45,7 @@ pipeline{
             }
         }
         stage("Test de Vulnerabilidades de seguridad"){
+          when {equals expected: 'YES', actual: SCAN_GRYPE}
           agent { label 'grype_test'}
           steps{
               unstash 'backartifact'
