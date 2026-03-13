@@ -1,3 +1,4 @@
+def url_repo = "https://github.com/andresmerida/academic-management.git"
 pipeline{
     agent {  
        label 'slave1'
@@ -12,9 +13,17 @@ pipeline{
                 cleanWs()
             }
         }
+        stage("Colocar nombre de Build")
+        {
+            steps{
+                script{
+                    currentBuild.displayName="Services-deploy_back-"+ currentBuild.number
+                }
+            }
+        }
         stage("Descargar Proyecto"){
             steps{
-                git credentialsId: 'git_cred', branch: 'dev', url: "https://github.com/andresmerida/academic-management.git"
+                git credentialsId: 'git_cred', branch: 'dev', url: "${url_repo}"
             }
         }
         stage("Realizar Build"){
