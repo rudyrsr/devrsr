@@ -1,3 +1,4 @@
+def url_repo = "https://github.com/andresmerida/academic-management.git"
 pipeline{
     agent{
         label 'slave1'
@@ -5,6 +6,9 @@ pipeline{
     tools{
         jdk 'java21_master'
         maven 'maven-399'
+    }
+    parameters{
+        string defaultValue: 'dev',description: 'Colocar el branch a ejecutar',name: 'BRANCH', trim: false
     }
     stages{
         stage("Limpiar Espacio de Trabajo"){
@@ -14,7 +18,7 @@ pipeline{
         }
         stage("Descargar Proyecto"){
             steps{
-                git credentialsId: 'git_secret', branch: 'dev', url: "https://github.com/andresmerida/academic-management.git"
+                git credentialsId: 'git_secret', branch: "${params.BRANCH}", url: "${url_repo}"
             }
         }
         stage("Realizar build"){
