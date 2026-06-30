@@ -9,6 +9,8 @@ pipeline{
     }
     parameters{
         string defaultValue: 'dev',description: 'Colocar el branch a ejecutar',name: 'BRANCH', trim: false
+        choice (name: 'SCAN_GRYPE', choices: ['YES','NO'], description: 'Seleccione YES si desea escanear vulnerabilidades de seguridad')
+        choice (name: 'SCAN_SONARQ', choices: ['NO','YES'], description: 'Seleccione YES si desea escanear codigo con SonarQube')
     }
     stages{
         stage("Limpiar Espacio de Trabajo"){
