@@ -1,3 +1,0 @@
-# devrsr
-pipeline devops
-iniciando
