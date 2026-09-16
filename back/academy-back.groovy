@@ -39,5 +39,13 @@ pipeline{
                 }
             }
         }
+        stage("Test de vulnerabilidades con grype"){
+          agent{ label 'agent_grype' }
+          steps{
+               unstash 'backartifact'
+               sh "/grype /home/workspace/DEV/BACKEND/Job_academy-back/am-core-web-service/target/app.jar > Informe-scan.txt"
+          }  
+
+        }
     }
 }
