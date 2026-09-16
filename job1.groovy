@@ -2,7 +2,8 @@
 def url_repo= "https://github.com/andresmerida/academic-management.git" 
 pipeline{
     agent{
-        label 'built-in'
+        //label 'built-in'
+        label 'agent1'
     }
     tools{
         jdk 'java_21m'
