@@ -1,9 +1,9 @@
 
-def url_repo= "https://git.digitalharborbolivia.com:8081/rsalvatierra.teacher/academy.git"
-def low_back= ""
-def medium_back= ""
-def critical_back= ""
-def high_back= "" 
+def url_repo ="https://git.digitalharborbolivia.com:8081/rsalvatierra.teacher/academy.git"
+def low_back =""
+def medium_back =""
+def critical_back =""
+def high_back ="" 
 pipeline{
     agent{
         //label 'built-in'
@@ -46,17 +46,17 @@ pipeline{
         stage("Test de vulnerabilidades con grype"){
           agent{ label 'agent_grype' }
           steps{
+               script{
                unstash 'backartifact'
                sh "/grype /home/workspace/DEV/BACKEND/Job_academy-back/am-core-web-service/target/app.jar > Informe-scan-back.txt"
                stash includes: 'Informe-scan-back.txt', name: 'backreports'
                archiveArtifacts artifacts: 'Informe-scan-back.txt', onlyIfSuccessful: true
-               low_back= sh(returnStdout: true, script: "cat Informe-scan-back.txt | grep 'Low' | wc -l").trim()
-               medium_back= sh(returnStdout: true, script: "cat Informe-scan-back.txt | grep 'Medium' | wc -l").trim()
-               high_back= sh(returnStdout: true, script: "cat Informe-scan-back.txt | grep 'High' | wc -l").trim()
-               critical_back= sh(returnStdout: true, script: "cat Informe-scan-back.txt | grep 'Critical' | wc -l").trim()
+               low_back = sh(returnStdout: true, script: "cat Informe-scan-back.txt | grep 'Low' | wc -l").trim()
+               medium_back = sh(returnStdout: true, script: "cat Informe-scan-back.txt | grep 'Medium' | wc -l").trim()
+               high_back = sh(returnStdout: true, script: "cat Informe-scan-back.txt | grep 'High' | wc -l").trim()
+               critical_back = sh(returnStdout: true, script: "cat Informe-scan-back.txt | grep 'Critical' | wc -l").trim()
                sh "echo 'vulnerabilities: low_back->${low_back}, medium_back->${medium_back}, high_back->${high_back}, critical_back->${critical_back}'"
-
-
+               }
           }  
 
         }
