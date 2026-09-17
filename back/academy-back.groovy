@@ -73,7 +73,7 @@ pipeline{
                     script{
                         sh "pwd"
                         writeFile encoding: 'UTF-8', file: 'sonar-project.properties', text: """sonar.projectKey=academy-back
-								sonar.projectName=academy.back
+								sonar.projectName=academy-back
 								sonar.projectVersion=1.0.0
 								sonar.sourceEncoding=UTF-8
 								sonar.sources=am-core-web-service/src/main/java
