@@ -43,9 +43,12 @@ pipeline{
           agent{ label 'agent_grype' }
           steps{
                unstash 'backartifact'
-               sh "/grype /home/workspace/DEV/BACKEND/Job_academy-back/am-core-web-service/target/app.jar > Informe-scan.txt"
+               sh "/grype /home/workspace/DEV/BACKEND/Job_academy-back/am-core-web-service/target/app.jar > Informe-scan-back.txt"
+               stash includes: 'Informe-scan-back.txt', name: 'backreports'
+               archiveArtifacts artifacts: 'Informe-scan-back.txt', onlyIfSuccessful: true
+
           }  
 
         }
-    }
+   }  
 }

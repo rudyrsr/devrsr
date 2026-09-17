@@ -1,5 +1,9 @@
 
 def url_repo= "https://git.digitalharborbolivia.com:8081/rsalvatierra.teacher/academy.git" 
+def low_vmf =""
+def high_vmf =""
+def medium_vmf =""
+def critical_vmf =""
 pipeline{
     agent{
         //label 'built-in'
@@ -40,5 +44,7 @@ pipeline{
                 }
             }
         }
+       
+
     }
 }
