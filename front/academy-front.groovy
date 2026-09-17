@@ -48,9 +48,9 @@ pipeline{
           agent{ label 'agent_grype' }
           steps{
                script{
-                unstash 'nodmodule'
-                sh "tar xvfz nodemodule.tar.gz"
-                sh "grype dir:node_modules > Informe-scan-front.txt"
+               unstash 'nodmodule'
+               sh "tar xvfz nodemodule.tar.gz"
+               sh "/grype dir:node_modules > Informe-scan-front.txt"
                stash includes: 'Informe-scan-front.txt', name: 'frontreports'
                archiveArtifacts artifacts: 'Informe-scan-front.txt', onlyIfSuccessful: true
                low_back = sh(returnStdout: true, script: "cat Informe-scan-front.txt | grep 'Low' | wc -l").trim()
