@@ -58,10 +58,31 @@ pipeline{
                high_back = sh(returnStdout: true, script: "cat Informe-scan-front.txt | grep 'High' | wc -l").trim()
                critical_back = sh(returnStdout: true, script: "cat Informe-scan-front.txt | grep 'Critical' | wc -l").trim()
                sh "echo 'vulnerabilities: low_back->${low_back}, medium_back->${medium_back}, high_back->${high_back}, critical_back->${critical_back}'"
-               sh "rm -f nodemodule.tar.gz node_modules"
+               sh "rm -rf nodemodule.tar.gz node_modules"
                }
           }  
 
+        }
+        stage("Test con SonarQube"){
+            steps{
+                dir ('back'){
+                    script{
+                        sh "pwd"
+                        writeFile encoding: 'UTF-8', file: 'sonar-project.properties', text: """sonar.projectKey=academy-back
+								sonar.projectName=academy.back
+								sonar.projectVersion=1.0.0
+								sonar.sourceEncoding=UTF-8
+								sonar.sources=am-core-web-service/src/main/java
+								sonar.java.binaries=am-core-web-service/target/classes
+								sonar.language=java
+								sonar.scm.provider=git
+                                """
+                        withSonarQubeEnv('Sonar_CI') {
+                             sh "${tool('Sonar_CI')}/bin/sonar-scanner -X"
+                        }
+                    }
+                }
+            }
         }
 
     }
