@@ -25,11 +25,7 @@ pipeline{
             steps{
                 dir('front'){
                    sh "docker run --rm -v \$(pwd):/usr/src/app -w /usr/src/app node:20.11 sh -c 'npm install && npm run build'"
-                   sh 'tar -cvzf nodemodule.tar.gz node_modules/*'
-                   stash includes: 'nodemodule.tar.gz', name:'nodmodule'
-                   sh 'tar -cvzf dist.tar.gz dist/*'
-                   archiveArtifacts artifacts: 'dist.tar.gz', followSymlinks: false
-                   stash includes: 'dist.tar.gz', name:'distfront'
+                   sh 'pwd'
                 }
             }
         }
@@ -63,7 +59,28 @@ pipeline{
           }  
 
         }
-        
+        stage("Análisis con SonarQube") {
+            steps {
+                dir('front') {
+                    script {
+                        writeFile encoding: 'UTF-8', file: 'sonar-project.properties', text: """
+                            sonar.projectKey=academy-vue-frontend
+                            sonar.projectName=Academy Vue Frontend
+                            sonar.projectVersion=1.0.0
+                            sonar.sourceEncoding=UTF-8
+                            sonar.sources=src
+                            sonar.inclusions=**/*.js,**/*.ts,**/*.vue
+                            sonar.exclusions=**/node_modules/**,**/dist/**,**/*.spec.js,**/*.spec.ts
+                            # sonar.javascript.lcov.reportPaths=coverage/lcov.info
+                        """
+                        
+                        withSonarQubeEnv('Sonar_CI') {
+                            sh "${tool('Sonar_CI')}/bin/sonar-scanner -X"
+                        }
+                    }
+                }
+            }
+        }
 
     }
 }
