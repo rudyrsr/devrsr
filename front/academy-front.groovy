@@ -9,6 +9,11 @@ pipeline{
         //label 'built-in'
         label 'node_deploy'
     }
+    parameters{
+           string defaultValue: 'devrsr',description: 'Colocar el branch a ejecutar',name: 'BRANCH', trim: 'false'
+           choice (name: 'SCAN_GRYPE', choices: ['YES','NO'],description: 'Seleccione YES si desea escanear vulnerabilidades de seguridad') 
+           choice (name: 'SCAN_SONARQ', choices: ['NO','YES'],description: 'Seleccione YES si desea escanear codigo con Sonarqube')
+    }
     stages{
         stage("limpiar espacio de trabajo"){
             steps{
@@ -17,7 +22,7 @@ pipeline{
         }
         stage("Descargar Proyecto"){
             steps{
-                git credentialsId: 'gitlab_secret', branch: "devrsr", url:"${url_repo}"
+                git credentialsId: 'gitlab_secret', branch: "${params.BRANCH}", url:"${url_repo}"
         
             }    
         }
@@ -41,6 +46,7 @@ pipeline{
             }
         }
         stage("Test de vulnerabilidades con grype"){
+          when {equals expected: 'YES', actual: SCAN_GRYPE}  
           agent{ label 'agent_grype' }
           steps{
                script{
@@ -59,7 +65,8 @@ pipeline{
           }  
 
         }
-        stage("Análisis con SonarQube") {
+        stage("Test con SonarQube") {
+            when {equals expected: 'YES', actual: SCAN_SONARQ}
             steps {
                 dir('front') {
                     script {

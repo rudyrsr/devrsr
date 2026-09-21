@@ -81,7 +81,7 @@ pipeline{
 								sonar.language=java
 								sonar.scm.provider=git
                                 """
-                        withSonarQubeEnv('Sonar_CI') {
+                        withSonarQubeEnv('Sonar_CI') {                                                    
                              sh "${tool('Sonar_CI')}/bin/sonar-scanner -X"
                         }
                     }
