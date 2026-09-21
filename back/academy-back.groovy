@@ -26,7 +26,7 @@ pipeline{
         }
         stage("Descargar Proyecto"){
             steps{
-                git credentialsId: 'gitlab_secret', branch: "devrsr", url:"${url_repo}"
+                git credentialsId: 'gitlab_secret', branch: "${params.BRANCH}", url:"${url_repo}"
         
             }    
         }
