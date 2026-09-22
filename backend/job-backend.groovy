@@ -12,7 +12,7 @@ pipeline{
         }
         stage("Descargar Proyecto"){
             steps{
-                 git credentialsId: 'github-secret', branch: "dev", url:"https://github.com/andresmerida/academic-management.git"
+                 git credentialsId: 'github-secret', branch: "develop", url:"https://github.com/rudyrsr/academy-back.git"
             }
         }
         stage("Realizar build"){
