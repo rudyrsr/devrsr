@@ -7,6 +7,8 @@ pipeline{
     }
     parameters{
            string defaultValue: 'develop',description: 'Colocar el branch a ejecutar', name: 'BRANCH', trim: 'false'
+           choice(name: 'SCAN_GRYPE', choices: ['YES','NO'], description: 'Seleccione YES si desea escanear con Grype')
+           choice(name: 'SCAN_SONARQ', choices: ['NO','YES'], description: 'Seleccione YES si desea escanear con SONAR')
     }
     stages{
         stage("Limpiar Espacio de trabajo"){
@@ -34,7 +36,8 @@ pipeline{
             }
         }
         stage("Test con Grype"){
-            agent{ label 'agent_grype'}
+           when {equals expected: 'YES', actual: SCAN_GRYPE}
+           agent{ label 'agent_grype'}
            steps{
                 script{
                     unstash 'backartifact' 
