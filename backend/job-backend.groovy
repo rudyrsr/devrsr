@@ -33,5 +33,16 @@ pipeline{
                 archiveArtifacts artifacts: 'am-core-web-service/target/app.jar', onlyIfSuccessful: true
             }
         }
+        stage("Test con Grype"){
+            agent{ label 'agent_grype'}
+           steps{
+                script{
+                    unstash 'backartifact' 
+                    sh "/grype am-core-web-service/target/app.jar > Informe-scan-back.txt"
+                    stash includes: 'Informe-scan-back.txt', name: 'backreports'
+                    archiveArtifacts artifacts: 'Informe-scan-back.txt', onlyIfSuccessful: true
+                }
+           }
+        }
     }
 }
