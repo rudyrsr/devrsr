@@ -56,5 +56,25 @@ pipeline{
                 }
            }
         }
+        stage("Test con SonarQube"){
+            when {equals expected: 'YES', actual: SCAN_SONARQ}
+            steps{
+                    script{
+                        sh "pwd"
+                        writeFile encoding: 'UTF-8', file: 'sonar-project.properties', text: """sonar.projectKey=academy-back
+								sonar.projectName=academy-back
+								sonar.projectVersion=1.0.0
+								sonar.sourceEncoding=UTF-8
+								sonar.sources=am-core-web-service/src/main/java
+								sonar.java.binaries=am-core-web-service/target/classes
+								sonar.language=java
+								sonar.scm.provider=git
+                                """
+                        withSonarQubeEnv('Sonar_CI') {
+                             sh "${tool('Sonar_CI')}/bin/sonar-scanner -X"
+                        }
+                    }
+            }
+        }
     }
 }
