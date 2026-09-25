@@ -1,8 +1,12 @@
+def url_repo= "https://github.com/rudyrsr/academy-back.git"
 pipeline{
     agent{ label 'agent_deploy'}
     tools{
         jdk 'java_21'
         maven 'maven-399'
+    }
+    parameters{
+           string defaultValue: 'develop',description: 'Colocar el branch a ejecutar', name: 'BRANCH', trim: 'false'
     }
     stages{
         stage("Limpiar Espacio de trabajo"){
@@ -12,7 +16,7 @@ pipeline{
         }
         stage("Descargar Proyecto"){
             steps{
-                 git credentialsId: 'github-secret', branch: "develop", url:"https://github.com/rudyrsr/academy-back.git"
+                 git credentialsId: 'github-secret', branch: "${params.BRANCH}", url:"${url_repo}"
             }
         }
         stage("Realizar build"){
