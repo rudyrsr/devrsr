@@ -76,5 +76,20 @@ pipeline{
                     }
             }
         }
+        stage("push imagen en nexus"){
+           agent{ label 'node_deploy' }
+           steps{
+                script{
+                    unstash 'backartifact'
+                    sh "rm /data/jenkins_publish/app.jar | true"
+                    sh "cp am-core-web-service/target/app.jar /data/jenkins_publish/"
+                    sh "docker rmi 192.168.137.20:8082/repository/docker-repo/back-prueba:latest | true; cd  /data/jenkins_publish/; docker build -t 192.168.137.20:8082/repository/docker-repo/back-prueba:latest ."
+                    sh "docker push 192.168.137.20:8082/repository/docker-repo/back-prueba:latest"
+                     
+                }
+           }
+
+        }
+
     }
 }
